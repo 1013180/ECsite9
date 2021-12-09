@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<link rel="stylesheet" href="CSS.css">
+<head>
+<meta charset="UTF-8">
+<title>カート内一覧</title>
+</head>
+<body>
+<h1>ショッピングカート</h1>
+<div class="contents-blk">
+<h2>カート内の商品</h2>
+	<th:block th:if="${cart.f2}">
+	    <p><font color="red">カートに商品がありません</font></p><!-- 表示される-->
+	</th:block>
+	
+	<table border="1">
+		<thead>
+			<tr>
+				<th>商品名</th>
+				<th>価格</th>
+				<th>個数</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="item : ${cart.items}">
+				<td th:text="${item[0]}"></td>
+				<td th:text="${item[1]}"></td>
+				<td th:text="${item[2]}"></td>
+				<td>
+					<form th:action="@{/delete}" method="post">
+						<input type="hidden" name="price" th:value="${item[1]}"> <input
+							type="hidden" name="count" th:value="${item[2]}"> <input
+							type="hidden" name="no" th:value="${item[3]}"> <input
+							type="submit" value="カートから削除">
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<a href="/history">購入履歴から購入する</a>
+	</div>
+	<div class="contents-blk">
+	<th:block th:if="${cart.f}">
+		<p><font color="red">投入金額が不足しています</font></p>
+	</th:block>
+	<h2>お金を投入してください。</h2>
+	
+	<form th:action="@{/cart}" method="get">
+	 <input type="text" name="money">
+	 <input type="submit" value="投入">
+	</form>
+	<table border="1">
+		<tr>
+			<th>投入金額（円）</th>
+			<th>購入金額（円）</th>
+		</tr>
+		<tr>
+			<td th:text="${cart.sum}">円</td>
+			<td th:text="${cart.total_amount}">円</td>
+			<td><form th:action="@{/end}" method="GET">
+					<input type="hidden" name="list" th:value="${cart.items}">
+					<input type="submit" value="購入">
+				</form></td>
+		</tr>
+	</table>
+	<a href="/">商品一覧へ戻る</a>
+	<form th:action="@{/logout}" method="post">
+	</form>
+	</div>
+	<br>
+    <form th:action="@{/logout}" method="post">
+    <input type="submit" name="logout" value="ログアウト">
+	</form>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<link rel="stylesheet" href="CSS.css">
+<head>
+<meta charset="UTF-8">
+<title>商品一覧</title>
+</head>
+<body>
+ご購入ありがとうございました。
+<a href="/">トップページに戻る</a>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" name="logout" value="ログアウト">
+	</form>
+</body>
+</html>
